@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * OSIcon
+ * Author: Tiago Conceição
+ * 
+ * https://github.com/sn4k3/OSIcon
+ * http://www.codeproject.com/Articles/50064/OSIcon
+ */
+using System;
 using System.Windows.Forms;
 
 namespace OSIcon.Explorer
@@ -10,14 +17,14 @@ namespace OSIcon.Explorer
         /// </summary>
         public const string AppTitle = "OSIcon Explorer";
 
-        public static Main mainFrm;
+        public static Main MainFrm;
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            mainFrm = new Main();
-            Application.Run(mainFrm);
+            MainFrm = new Main();
+            Application.Run(MainFrm);
         }
     }
 }

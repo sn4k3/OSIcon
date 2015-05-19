@@ -1,11 +1,18 @@
-﻿using System;
+﻿/*
+ * OSIcon
+ * Author: Tiago Conceição
+ * 
+ * https://github.com/sn4k3/OSIcon
+ * http://www.codeproject.com/Articles/50064/OSIcon
+ */
+using System;
 using System.Windows.Forms;
 
 namespace OSIcon.Explorer
 {
     public partial class WindowsThumbnails : UserControl
     {
-        #region Variables
+        #region Properties
         public WindowsThumbnail WindowsThumbnail { get; private set; }
         #endregion
 
@@ -22,12 +29,12 @@ namespace OSIcon.Explorer
         {
             base.OnLoad(e);
             // This is unless in other systems lower than Vista so, disable it:
-            if(!OSIcon.Utilities.IsVistaOrAbove())
+            if(!Utilities.IsVistaOrAbove())
             {
                 lbRequirements.Visible = true;
                 return;
             }
-            WindowsThumbnail.AddIgnoredHandler(Program.mainFrm.Handle);
+            WindowsThumbnail.AddIgnoredHandler(Program.MainFrm.Handle);
             // Retrieve windows list
             GetWindows();
             Resize += (sender, args) => UpdateThumb();
@@ -72,7 +79,7 @@ namespace OSIcon.Explorer
         private void cbWindows_SelectedIndexChanged(object sender, EventArgs e)
         {
             var w = (WindowsThumbnail.Window)cbWindows.SelectedItem;
-            var registed = WindowsThumbnail.Register(Program.mainFrm.Handle, w);
+            var registed = WindowsThumbnail.Register(Program.MainFrm.Handle, w);
             if(registed)
                 UpdateThumb();
         }

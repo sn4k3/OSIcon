@@ -70,7 +70,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities.cs" />
     <Compile Include="WindowsThumbnails.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,18 +119,6 @@
       <Project>{44dbcedc-2e1b-408d-965a-eded507f2407}</Project>
       <Name>OSIcon</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Up-icon16x16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Up-icon32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Up-icon48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\Up-icon256x256.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

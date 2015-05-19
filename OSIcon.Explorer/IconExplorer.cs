@@ -1,16 +1,25 @@
-﻿using System;
-using System.Drawing;
+﻿/*
+ * OSIcon
+ * Author: Tiago Conceição
+ * 
+ * https://github.com/sn4k3/OSIcon
+ * http://www.codeproject.com/Articles/50064/OSIcon
+ */
+using System;
 using System.Windows.Forms;
 
 namespace OSIcon.Explorer
 {
     public partial class IconExplorer : UserControl
     {
+        #region Constructor
         public IconExplorer()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Events
         private void ButtonClick(object sender, EventArgs e)
         {
             if(sender == btnOpen)
@@ -25,7 +34,9 @@ namespace OSIcon.Explorer
                 return;
             }
         }
+        #endregion
 
+        #region Methods
         private void LoadIcons(string filename)
         {
             tbFilename.Text = filename;
@@ -41,5 +52,6 @@ namespace OSIcon.Explorer
             }
             trIcons.EndUpdate();
         }
+        #endregion
     }
 }

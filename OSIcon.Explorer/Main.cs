@@ -1,10 +1,18 @@
-﻿using System;
+﻿/*
+ * OSIcon
+ * Author: Tiago Conceição
+ * 
+ * https://github.com/sn4k3/OSIcon
+ * http://www.codeproject.com/Articles/50064/OSIcon
+ */
+using System;
 using System.Windows.Forms;
 
 namespace OSIcon.Explorer
 {
     public partial class Main : Form
     {
+        #region Constructor
         public Main()
         {
             InitializeComponent();
@@ -12,14 +20,18 @@ namespace OSIcon.Explorer
             tbTests.Enabled = false;
             tabC.Controls.Remove(tbTests);
         }
+        #endregion
 
+        #region Overrides
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             // Disable "Windows Thumbnails" tab because only Vista or above support this
-            if (!OSIcon.Utilities.IsVistaOrAbove())
+            if (!Utilities.IsVistaOrAbove())
                 tbWindowsThumbnails.Enabled = false;
         }
+        #endregion
+
         /*
          * New Features test
          * Please not use

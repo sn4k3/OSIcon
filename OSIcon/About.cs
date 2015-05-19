@@ -1,3 +1,10 @@
+/*
+ * OSIcon
+ * Author: Tiago Conceição
+ * 
+ * https://github.com/sn4k3/OSIcon
+ * http://www.codeproject.com/Articles/50064/OSIcon
+ */
 namespace OSIcon
 {
     public static class About

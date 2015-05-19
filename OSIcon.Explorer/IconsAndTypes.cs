@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * OSIcon
+ * Author: Tiago Conceição
+ * 
+ * https://github.com/sn4k3/OSIcon
+ * http://www.codeproject.com/Articles/50064/OSIcon
+ */
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -6,20 +13,29 @@ namespace OSIcon.Explorer
 {
     public partial class IconsAndTypes : UserControl
     {
+        #region Variables
+        /// <summary>
+        /// Icon dictionary
+        /// </summary>
         private Dictionary<string, string> _iconList;
+        #endregion
+
+        #region Constructor
         public IconsAndTypes()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Overrides
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             // Extra Large icon size was introduced on XP and above so:
-            if(OSIcon.Utilities.IsXpOrAbove())
+            if(Utilities.IsXpOrAbove())
                 chbIconSizeExtraLarge.Enabled = true;
             // Jumbo icon size was introduced on Vista and above so:
-            if (OSIcon.Utilities.IsVistaOrAbove())
+            if (Utilities.IsVistaOrAbove())
             {
                 chbIconSizeJumbo.Enabled = true;
                 chbIconSizeJumbo.Checked = true;
@@ -27,7 +43,9 @@ namespace OSIcon.Explorer
             // Populate List with all available extensions
             PopulateList();
         }
+        #endregion
 
+        #region Methods
         // Populate list with all known extensions
         private void PopulateList()
         {
@@ -56,6 +74,18 @@ namespace OSIcon.Explorer
             pbIconExtraLarge.Image = pbIconExtraLarge.InitialImage;
         }
 
+        // Use that to show icon error image and set labels text
+        private void SetError()
+        {
+            pbIconPreview.Image = pbIconPreview.ErrorImage;
+            lbFileType.Text = @"File Type: Unknown";
+            lbDisplayName.Text = @"Display Name: Unknown";
+            lbIconIndex.Text = @"Icon Index: -1";
+        }
+        #endregion
+
+        #region Events
+
         // Change image for extension
         private void lbExtensions_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -66,13 +96,13 @@ namespace OSIcon.Explorer
                 return;
             }
             // extension exist in our dictionary?
-            string extension = lbExtensions.SelectedItem.ToString();
+            var extension = lbExtensions.SelectedItem.ToString();
             if (!_iconList.ContainsKey(extension))
             {
                 pbIconPreview.Image = pbIconPreview.ErrorImage;
                 return;
             }
-            IconSize iconsize = IconSize.Small;
+            var iconsize = IconSize.Small;
             // Define selected icon size
             if (chbIconSizeLarge.Checked)
                 iconsize = IconSize.Large;
@@ -116,7 +146,7 @@ namespace OSIcon.Explorer
                 }
             }
 
-        iconInfo.Icon.Dispose();
+            iconInfo.Icon.Dispose();
         }
 
         // Search for extensions
@@ -163,13 +193,6 @@ namespace OSIcon.Explorer
                 return;
             }
         }
-        // Use that to show icon error image and set labels text
-        private void SetError()
-        {
-            pbIconPreview.Image = pbIconPreview.ErrorImage;
-            lbFileType.Text = @"File Type: Unknown";
-            lbDisplayName.Text = @"Display Name: Unknown";
-            lbIconIndex.Text = @"Icon Index: -1";
-        }
+        #endregion
     }
 }
