@@ -37,12 +37,13 @@
             this.lbTotal = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbSelected = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolBar = new System.Windows.Forms.ToolStrip();
+            this.tbAddress = new System.Windows.Forms.ToolStripTextBox();
+            this.ddViewStyle = new System.Windows.Forms.ToolStripComboBox();
+            this.btnNavigationHistory = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnGoBack = new System.Windows.Forms.ToolStripButton();
             this.btnGoForward = new System.Windows.Forms.ToolStripButton();
             this.btnGoUp = new System.Windows.Forms.ToolStripButton();
-            this.tbAddress = new System.Windows.Forms.ToolStripTextBox();
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.ddViewStyle = new System.Windows.Forms.ToolStripComboBox();
             this.statusBar.SuspendLayout();
             this.toolBar.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +66,7 @@
             this.lvFileExplorer.View = System.Windows.Forms.View.Details;
             this.lvFileExplorer.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.lvFileExplorer_AfterLabelEdit);
             this.lvFileExplorer.ItemActivate += new System.EventHandler(this.lvFileExplorer_ItemActivate);
+            this.lvFileExplorer.SelectedIndexChanged += new System.EventHandler(this.lvFileExplorer_SelectedIndexChanged);
             this.lvFileExplorer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvFileExplorer_KeyDown);
             this.lvFileExplorer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lvFileExplorer_MouseUp);
             // 
@@ -115,7 +117,6 @@
             this.lbSelected.Name = "lbSelected";
             this.lbSelected.Size = new System.Drawing.Size(327, 17);
             this.lbSelected.Spring = true;
-            this.lbSelected.Text = "Nothing Selected";
             // 
             // toolBar
             // 
@@ -123,6 +124,7 @@
             this.toolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnGoBack,
             this.btnGoForward,
+            this.btnNavigationHistory,
             this.btnGoUp,
             this.tbAddress,
             this.btnRefresh,
@@ -132,6 +134,36 @@
             this.toolBar.Size = new System.Drawing.Size(670, 25);
             this.toolBar.TabIndex = 7;
             this.toolBar.Text = "Toolbar";
+            // 
+            // tbAddress
+            // 
+            this.tbAddress.Name = "tbAddress";
+            this.tbAddress.ReadOnly = true;
+            this.tbAddress.Size = new System.Drawing.Size(400, 25);
+            // 
+            // ddViewStyle
+            // 
+            this.ddViewStyle.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ddViewStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddViewStyle.Items.AddRange(new object[] {
+            "Large Icons",
+            "Details",
+            "Small Icons",
+            "List",
+            "Title"});
+            this.ddViewStyle.Name = "ddViewStyle";
+            this.ddViewStyle.Size = new System.Drawing.Size(121, 25);
+            this.ddViewStyle.SelectedIndexChanged += new System.EventHandler(this.ddViewStyle_SelectedIndexChanged);
+            // 
+            // btnNavigationHistory
+            // 
+            this.btnNavigationHistory.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNavigationHistory.Enabled = false;
+            this.btnNavigationHistory.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNavigationHistory.Name = "btnNavigationHistory";
+            this.btnNavigationHistory.Size = new System.Drawing.Size(13, 22);
+            this.btnNavigationHistory.Text = "Recent";
+            this.btnNavigationHistory.ToolTipText = "Recent";
             // 
             // btnGoBack
             // 
@@ -166,12 +198,6 @@
             this.btnGoUp.Text = "Up";
             this.btnGoUp.Click += new System.EventHandler(this.ButtonClick);
             // 
-            // tbAddress
-            // 
-            this.tbAddress.Name = "tbAddress";
-            this.tbAddress.ReadOnly = true;
-            this.tbAddress.Size = new System.Drawing.Size(400, 25);
-            // 
             // btnRefresh
             // 
             this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -181,20 +207,6 @@
             this.btnRefresh.Size = new System.Drawing.Size(23, 22);
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.Click += new System.EventHandler(this.ButtonClick);
-            // 
-            // ddViewStyle
-            // 
-            this.ddViewStyle.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.ddViewStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddViewStyle.Items.AddRange(new object[] {
-            "Large Icons",
-            "Details",
-            "Small Icons",
-            "List",
-            "Title"});
-            this.ddViewStyle.Name = "ddViewStyle";
-            this.ddViewStyle.Size = new System.Drawing.Size(121, 25);
-            this.ddViewStyle.SelectedIndexChanged += new System.EventHandler(this.ddViewStyle_SelectedIndexChanged);
             // 
             // FileExplorer
             // 
@@ -220,16 +232,17 @@
         private System.Windows.Forms.ColumnHeader chSize;
         private System.Windows.Forms.ColumnHeader chType;
         private System.Windows.Forms.ColumnHeader chModified;
-        private System.Windows.Forms.StatusStrip statusBar;
-        private System.Windows.Forms.ToolStrip toolBar;
         public System.Windows.Forms.ListView lvFileExplorer;
         public System.Windows.Forms.ToolStripStatusLabel lbSelected;
         public System.Windows.Forms.ToolStripStatusLabel lbTotal;
         public System.Windows.Forms.ToolStripTextBox tbAddress;
         public System.Windows.Forms.ToolStripComboBox ddViewStyle;
-        private System.Windows.Forms.ToolStripButton btnGoBack;
-        private System.Windows.Forms.ToolStripButton btnGoForward;
-        private System.Windows.Forms.ToolStripButton btnGoUp;
-        private System.Windows.Forms.ToolStripButton btnRefresh;
+        public System.Windows.Forms.StatusStrip statusBar;
+        public System.Windows.Forms.ToolStrip toolBar;
+        public System.Windows.Forms.ToolStripButton btnGoBack;
+        public System.Windows.Forms.ToolStripButton btnGoForward;
+        public System.Windows.Forms.ToolStripButton btnGoUp;
+        public System.Windows.Forms.ToolStripButton btnRefresh;
+        public System.Windows.Forms.ToolStripDropDownButton btnNavigationHistory;
     }
 }

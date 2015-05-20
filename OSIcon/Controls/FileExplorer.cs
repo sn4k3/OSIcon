@@ -182,7 +182,8 @@ namespace OSIcon.Controls
             }
             lvFileExplorer.EndUpdate();
             tbAddress.Text = @"My Computer";
-            lbTotal.Text = string.Format("{0} Drive(s)", lvFileExplorer.Items.Count);
+            lbTotal.Text = string.Format("{0} {1}", lvFileExplorer.Items.Count, Utilities.ConvertPlural(lvFileExplorer.Items.Count, "Drive"));
+            lbSelected.Text = string.Empty;
 
             RewindManager.Add(CurrentPath);
             btnGoUp.Enabled = false;
@@ -307,7 +308,7 @@ namespace OSIcon.Controls
                 RewindManager.Add(path);
                 btnGoBack.Enabled = RewindManager.CanPrevious;
                 btnGoForward.Enabled = RewindManager.CanForward;
-                //Program.MainFrm.lbSBselection.Text = "Nothing Selected";
+                lbSelected.Text = string.Empty;
                 CurrentPath = path;
                 lvFileExplorer.BeginUpdate();
                 lvFileExplorer.Items.Clear();
@@ -348,7 +349,7 @@ namespace OSIcon.Controls
                     };
                     item.SubItems.Add(fi.LastWriteTime.ToString(CultureInfo.CurrentCulture));
                     item.SubItems.Add(iconProp.IconsInfo[IconSize.Small].TypeName);
-                    item.SubItems.Add(fi.Length.ToString());
+                    item.SubItems.Add(string.Format(" {0:##.##} {1}", Utilities.FormatByteSize(fi.Length), Utilities.GetSizeNameFromBytes(fi.Length, false)));
                     lvFileExplorer.Items.Add(item);
                     TotalFilesSize += fi.Length;
                     TotalFiles++;
@@ -356,12 +357,12 @@ namespace OSIcon.Controls
                 // Lets make some status and retrieve total folders, files and their total size
                 string textToSet = string.Empty;
                 if (TotalFolders > 0)
-                    textToSet += string.Format("{0} Folder(s)", TotalFolders);
+                    textToSet += string.Format("{0} {1}", TotalFolders, Utilities.ConvertPlural(TotalFolders, "Folder"));
                 if (TotalFiles > 0)
                 {
                     if (textToSet != "Total:")
                         textToSet += " &";
-                    textToSet += string.Format(" {0:##.##} {1} in {2} File(s)", Utilities.FormatByteSize(TotalFilesSize), Utilities.GetSizeNameFromBytes(TotalFilesSize, true), TotalFiles);
+                    textToSet += string.Format(" {0:##.##} {1} in {2} {3}", Utilities.FormatByteSize(TotalFilesSize), Utilities.GetSizeNameFromBytes(TotalFilesSize, false), TotalFiles, Utilities.ConvertPlural(TotalFiles, "File"));
                 }
                 if (textToSet == "Total:")
                     textToSet = "Empty";
@@ -376,6 +377,7 @@ namespace OSIcon.Controls
             {
                 lvFileExplorer.EndUpdate();
                 Cursor = Cursors.Default;
+                RebuildNavigationHistory();
                 //Text = string.Format("{0} - {1}", path, Program.AppTitle);
             }
         }
@@ -454,6 +456,41 @@ namespace OSIcon.Controls
             }
             return -1;
         }
+
+        public void RebuildNavigationHistory()
+        {
+            btnNavigationHistory.DropDownItems.Clear();
+            int i = 0;
+            foreach (var item in RewindManager)
+            {
+                ToolStripMenuItem menuitem = new ToolStripMenuItem {Tag = item};
+                if (string.IsNullOrEmpty(item))
+                {
+                    menuitem.Text = "My Computer";
+                }
+                else
+                {
+                    menuitem.Text = Path.GetFileName(item);
+                    if (string.IsNullOrEmpty(menuitem.Text))
+                        menuitem.Text = item;
+                }
+
+                if (i == RewindManager.CurrentIndex)
+                {
+                    menuitem.Checked = true;
+                }
+
+                menuitem.Click += (sender, args) =>
+                {
+                    RewindManager.Go(item);
+                    ShowPathContents(item);
+                };
+                btnNavigationHistory.DropDownItems.Add(menuitem);
+                i++;
+            }
+
+            btnNavigationHistory.Enabled = btnNavigationHistory.DropDownItems.Count > 0;
+        }
         #endregion
 
         #region Events
@@ -487,6 +524,17 @@ namespace OSIcon.Controls
             if (!HandleFileExplorer) return;
             if (lvFileExplorer.SelectedItems.Count <= 0) return;
             HandleNavigate(lvFileExplorer.SelectedItems[0]);
+        }
+
+        private void lvFileExplorer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvFileExplorer.SelectedItems.Count == 0)
+            {
+                lbSelected.Text = string.Empty;
+                return;
+            }
+
+            lbSelected.Text = string.Format("{0} {1} selected", lvFileExplorer.SelectedItems.Count, Utilities.ConvertPlural(lvFileExplorer.SelectedItems.Count, "item"));
         }
 
         // When user change View

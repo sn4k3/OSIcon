@@ -64,6 +64,11 @@ namespace OSIcon
         /// Gets if this icon have valid and registed information
         /// </summary>
         public bool HasInfo { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the object tag
+        /// </summary>
+        public object Tag { get; set; }
         #endregion
 
         #region Constructor

@@ -125,14 +125,45 @@ namespace OSIcon
         public static string GetSizeNameFromBytes(long bytes, bool longName)
         {
             if (bytes > (long)SizeBytes.TB)
-                return longName ? "Terabyte(s)" : "TB";
+                return longName ? "Terabytes" : "TB";
             if (bytes > (int)SizeBytes.GB)
-                return longName ? "Gigabyte(s)" : "GB";
+                return longName ? "Gigabytes" : "GB";
             if (bytes > (int)SizeBytes.MB)
-                return longName ? "Megabyte(s)" : "MB";
+                return longName ? "Megabytes" : "MB";
             if (bytes > (int)SizeBytes.KB)
-                return longName ? "Kilobyte(s)" : "KB";
-            return longName ? "Byte(s)" : "B";
+                return longName ? "Kilobytes" : "KB";
+            return longName ? "Bytes" : "B";
+        }
+        #endregion
+
+        #region String Utilities
+
+        /// <summary>
+        /// Append a 's' to the given text if the number is bigger than 1
+        /// </summary>
+        /// <param name="num">Number to check</param>
+        /// <param name="text">Text to use</param>
+        /// <returns>Singular or plural text</returns>
+        public static string ConvertPlural(int num, string text)
+        {
+            if (num <= 1)
+                return text;
+
+            return string.Format("{0}s", text);
+        }
+
+        /// <summary>
+        /// Append a 's' to the given text if the number is bigger than 1
+        /// </summary>
+        /// <param name="num">Number to check</param>
+        /// <param name="text">Text to use</param>
+        /// <returns>Singular or plural text</returns>
+        public static string ConvertPlural(long num, string text)
+        {
+            if (num <= 1)
+                return text;
+
+            return string.Format("{0}s", text);
         }
         #endregion
     }
